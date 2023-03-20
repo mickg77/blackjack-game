@@ -54,14 +54,15 @@ def compare(user_score, computer_score):
 #starting_screen()
 
 game_on=True
-play_again="Y"
+
 while game_on:
   is_game_over=False
   computer_cards.clear()
   user_cards.clear()
   user_score=0
   computer_score=0
-
+  twist=""
+  
   for _ in range(2):
  
     user_cards.append(deal_card())
@@ -69,20 +70,23 @@ while game_on:
   
   
   while not is_game_over:
+    clear()
+    twist=""
     user_score = calculate_score(user_cards)
     computer_score = calculate_score(computer_cards)
   
     print(f" Your cards: {user_cards}, current score : {user_score}")
     print(f" Computer cards: {computer_cards}, current score : {computer_score}")
+    
     if user_score ==0 or computer_score ==0 or user_score >21:
       is_game_over =True
     else:
-      
-        play_again = input("Twist? Y/N\n")
-        if play_again=="Y":
-          user_cards.append(deal_card())
-        else:
-          is_game_over=True
+      while twist!="Y" and twist!="N": 
+        twist = input("Twist? Y/N\n")
+      if twist=="Y":
+        user_cards.append(deal_card())
+      else:
+        is_game_over=True
   while computer_score!=0 and computer_score <17 or( computer_score<user_score and user_score<22):
     computer_cards.append(deal_card())
     computer_score = calculate_score(computer_cards)
@@ -90,11 +94,19 @@ while game_on:
   print(f"   Computer's final hand: {computer_cards}, final score: {computer_score}")
     
   print(compare(user_score, computer_score))
+  print("-----------------------------------------------")
+  play_again=input("Do you want to play again? Y/N\n")
+  if play_again=="Y":
+    game_on=True
+  else:
+    game_on=False
   
-  input("Play another hand?")
+ 
   
   
 
 
 
 
+
+print("\nThanks for playing\n")
